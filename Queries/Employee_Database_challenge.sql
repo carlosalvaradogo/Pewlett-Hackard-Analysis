@@ -43,11 +43,7 @@ ORDER BY (emp_no);
 
 -- DELIVERABLE 3: (two additional queries)
 
--- How many roles will need to be filled as the "silver tsunami" begins to make an impact?
-SELECT SUM(count) FROM retiring_titles;
-
--- Are there enough qualified, retirement-ready employees in the departments to mentor the next generation of Pewlett Hackard employees?
--- creating retirement titles by departments table (retirement_titles_2)
+-- Creating retirement titles table (retirement_titles_2)
 SELECT e.emp_no, e.first_name, e.last_name, 
 	t.title, t.from_date, t.to_date, 
 	de.dept_no, 
@@ -83,6 +79,9 @@ FROM unique_titles_2
 GROUP BY "Department Name"
 ORDER BY "Retiring Employee Count" DESC;
 
+-- How many roles will need to be filled as the "silver tsunami" begins to make an impact?
+SELECT COUNT(emp_no) FROM unique_titles_2;
+
 -- creating mentorship elegibility by department table (mentorship_elegibility_2)
 SELECT DISTINCT ON (e.emp_no) e.emp_no, e.first_name, e.last_name, e.birth_date, 
 	de.from_date, de.to_date, t.title, dep.dept_name
@@ -114,11 +113,7 @@ FROM retiring_titles_2 as rt
 LEFT JOIN mentorship_elegible AS me
 ON (rt."Department Name"=me."Department Name");
 
+-- Are there enough qualified, retirement-ready employees in the departments to mentor the next generation of Pewlett Hackard employees?
 SELECT "Department Name", 
 ("Retiring Employee Count"/"Mentorship Elegible Count") AS Ratio
 FROM final_table;
-
-
-
-
-
